@@ -129,7 +129,7 @@ def generate_first_n_subgraph(graph_pkl_file, n, save_file=None):
     return G_sub
 
 # Make a grid of 6 different visualizations of the graph and save it to a PDF.
-def variety_visualize_graph(G, title, pdf_pages, with_labels=True):
+def variety_visualize_graph(G, title, pdf_pages=None, with_labels=True):
     print("Visualizing", title)
 
     # Allocate a figure for the 6 different graph visualizations
@@ -173,10 +173,15 @@ def variety_visualize_graph(G, title, pdf_pages, with_labels=True):
 
     # Leave some space for the suptitle 
     plt.tight_layout(rect=[0,0,1,0.95])
-    pdf_pages.savefig()    
+
+    if pdf_pages is not None:
+        pdf_pages.savefig()  
+        plt.close()  
+    else:
+        plt.show()   
 
 # Visualize a graph with the node sizes scaled by their degrees.
-def visualize_degree_scaled_graph(G, title, pdf_pages, with_labels=True):
+def visualize_degree_scaled_graph(G, title, pdf_pages=None, with_labels=True):
     print("Visualizing", title)
 
     # Get the node sizes scaled by their degrees
@@ -187,11 +192,14 @@ def visualize_degree_scaled_graph(G, title, pdf_pages, with_labels=True):
     plt.title(title, fontsize=20)
     nx.draw(G, node_size=node_sizes, node_color="lightblue", edgecolors="black", linewidths=2, with_labels=with_labels, pos=nx.spring_layout(G))
 
-    pdf_pages.savefig()  
-    plt.close()  
+    if pdf_pages is not None:
+        pdf_pages.savefig()  
+        plt.close()  
+    else:
+        plt.show()
 
 # Make a grid of 2 visualizations for the ssbm graph with the communities colored differently.
-def visualize_colored_ssbm(G, node_to_community, title, pdf_pages, with_labels=True):
+def visualize_colored_ssbm(G, node_to_community, title, pdf_pages=None, with_labels=True):
     print("Visualizing", title)
 
     # Allocate a figure for the 2 different graph visualizations
@@ -216,7 +224,12 @@ def visualize_colored_ssbm(G, node_to_community, title, pdf_pages, with_labels=T
 
     # Leave some space for the suptitle 
     plt.tight_layout(rect=[0,0,1,0.95])
-    pdf_pages.savefig()
+    
+    if pdf_pages is not None:
+        pdf_pages.savefig()  
+        plt.close()  
+    else:
+        plt.show()
 
 # Simply save the graph to a file.
 def save_graph(G, save_file):
